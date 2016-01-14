@@ -23,7 +23,11 @@ float sz=1.0;
 float tx=0.0;
 float ty=0.0;
 
-float r = 0.0;
+int rotateC1 = 0;
+int rotateC2 = 0;
+
+float r1 = 0.0;
+float r2 = 0.0;
 
 void init(void) 
 {
@@ -35,6 +39,12 @@ void my_timer(int v)
 {
   
    //r += .5;
+   if(rotateC1){
+   	r1 +=.5;
+   }
+   if(rotateC2){
+   	r2 +=.5;
+   }
    
    //printf("%f \n", r);
    
@@ -118,7 +128,7 @@ void display(void)
    
    //1
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r1, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -128,7 +138,7 @@ void display(void)
    
    //2
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r2, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -218,7 +228,34 @@ void keyboard(unsigned char key, int x, int y)
    	
    	 case '1':
    	     printf("cube 1 \n");
+   	     rotateC1 = 1;
    		break;
+   	case '2':
+   	     printf("cube 2 \n");
+   	     rotateC2 = 1;
+   		break;
+   	case '3':
+   	     printf("cube 3 \n");
+   		break;
+   	case '4':
+   	     printf("cube 4 \n");
+   		break;
+   	case '5':
+   	     printf("cube 5 \n");
+   		break;
+   	case '6':
+   	     printf("cube 6 \n");
+   		break;
+   	case '7':
+   	     printf("cube 7 \n");
+   		break;
+   	case '8':
+   	     printf("cube 8 \n");
+   		break;
+   	case '9':
+   	     printf("cube 9 \n");
+   		break;	
+   		
       case 'x':
          ex=ex+0.05;
          break;
