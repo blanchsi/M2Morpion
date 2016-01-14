@@ -206,24 +206,19 @@ void display(void)
    //
    
    
-   
-   
-   
 
    glutSwapBuffers();
 }
 
 
 
-
-
-
-
-
-
 void keyboard(unsigned char key, int x, int y)
 {
    switch (key) {
+   	
+   	 case '1':
+   	     printf("cube 1 \n");
+   		break;
       case 'x':
          ex=ex+0.05;
          break;
@@ -247,23 +242,23 @@ void keyboard(unsigned char key, int x, int y)
       	 sx=sx+0.05;
       	 break;
       case 'L':
-printf("x: %f y: %f z: %f \n", sx, sy, sz);
+		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sx=sx-0.05;
       	 break;
       case 'h':
-printf("x: %f y: %f z: %f \n", sx, sy, sz);
+		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sy=sy+0.05;
       	 break;
       case 'H':
-printf("x: %f y: %f z: %f \n", sx, sy, sz);
+		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sy=sy-0.05;
       	 break;
       case 'p':
-printf("x: %f y: %f z: %f \n", sx, sy, sz);
+		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz+0.05;
       	 break;
       case 'P':
-printf("x: %f y: %f z: %f \n", sx, sy, sz);
+		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz-0.05;
       	 break;
       case 'v':
@@ -294,6 +289,7 @@ void reshape (int w, int h)
 
 int main(int argc, char** argv)
 {
+	//glut
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
    glutInitWindowSize (500, 500); 
@@ -304,6 +300,12 @@ int main(int argc, char** argv)
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
+   	
+   	//variables
+   int finDuJeu = 0;
+   
+  	//boucle du jeu
+   
    
    
 
