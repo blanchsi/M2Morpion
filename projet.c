@@ -107,20 +107,28 @@ void display(void)
    glClear (GL_COLOR_BUFFER_BIT);
    glClear (GL_DEPTH_BUFFER_BIT);
    
-   
+   glTranslatef(-3.5, -3, -1.0);
+   glTranslatef(sx, sy, sz);
    
    // draw
    glPushMatrix();
-   glTranslatef(sx, sy, sz);
-   glRotatef(r, 0,1,0);
+   cube();
    
+   glTranslatef(2, 0, 0);
    
    cube();
    
+   glTranslatef(2, 0, 0);
    
-   	
+   cube();
+   
+   glTranslatef(-4, 2, 0);
+   
+   cube();
    
    glPopMatrix();
+   
+   
    
    
    
@@ -158,21 +166,27 @@ void keyboard(unsigned char key, int x, int y)
          ez=ez-0.05;
          break;
       case 'l':
+      printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sx=sx+0.05;
       	 break;
       case 'L':
+printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sx=sx-0.05;
       	 break;
       case 'h':
+printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sy=sy+0.05;
       	 break;
       case 'H':
+printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sy=sy-0.05;
       	 break;
       case 'p':
+printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz+0.05;
       	 break;
       case 'P':
+printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz-0.05;
       	 break;
       case 'v':
@@ -197,7 +211,7 @@ void reshape (int w, int h)
    glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity ();
-   gluPerspective(120,w/h,1,20);
+   gluPerspective(120,w/h,1,10);
    glMatrixMode (GL_MODELVIEW);
 }
 
