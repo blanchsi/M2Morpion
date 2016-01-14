@@ -34,36 +34,40 @@ void init(void)
 void my_timer(int v)
 {
   
-   r += .5;
+   //r += .5;
    
    //printf("%f \n", r);
    
-   glutTimerFunc(40, my_timer, 1);
+   glutTimerFunc(10, my_timer, 1);
    glutPostRedisplay();
 }
 
 void cube(r, v, b){
 
    glBegin(GL_QUADS);
+   
+   
+   // Face verte
+   //
+   glColor3f (1, 1, 1);
+      glVertex3f (0, 0, 1);
+      glVertex3f (1, 0, 1);
+      glVertex3f (1, 1, 1);
+      glVertex3f (0, 1, 1);
+      
+      
    // Face rouge
    //
-   glColor3f (1, 0, 0);
+   glColor3f (0.5, 0.5, 0.5);
       glVertex3f (0, 0, 0);
       glVertex3f (1, 0, 0);
       glVertex3f (1, 1, 0);
       glVertex3f (0, 1, 0);
 
-   // Face verte
-   //
-   glColor3f (r, v, b);
-      glVertex3f (0, 0, 1);
-      glVertex3f (1, 0, 1);
-      glVertex3f (1, 1, 1);
-      glVertex3f (0, 1, 1);
 
    // Face noire
    //
-   glColor3f (0, 0, 0);
+   glColor3f (0.5, 0.5, 0.5);
       glVertex3f (0, 0, 0);
       glVertex3f (0, 0, 1);
       glVertex3f (0, 1, 1);
@@ -71,7 +75,7 @@ void cube(r, v, b){
 
    // Face blanche
    //
-   glColor3f (1, 1, 1);
+   glColor3f (0.5, 0.5, 0.5);
       glVertex3f (1, 0, 0);
       glVertex3f (1, 0, 1);
       glVertex3f (1, 1, 1);
@@ -87,7 +91,7 @@ void cube(r, v, b){
 
    // Face jaune
    //
-   glColor3f (1, 1, 0);
+   glColor3f (0.5, 0.5, 0.5);
       glVertex3f (0, 0, 1);
       glVertex3f (0, 0, 0);
       glVertex3f (1, 0, 0);
@@ -110,23 +114,96 @@ void display(void)
    glTranslatef(-3.5, -3, -1.0);
    glTranslatef(sx, sy, sz);
    
-   // draw
+   // On dessine les cubes
+   
+   //1
    glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
    cube();
+   glPopMatrix();
+   //
    
    glTranslatef(2, 0, 0);
    
+   //2
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
    cube();
+   glPopMatrix();
+   //
    
    glTranslatef(2, 0, 0);
    
+   //3
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
    cube();
+   glPopMatrix();
+   //
+   
    
    glTranslatef(-4, 2, 0);
    
+   //4
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
    cube();
-   
    glPopMatrix();
+   //
+   
+   glTranslatef(2, 0, 0);
+   
+   //5
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
+   cube();
+   glPopMatrix();
+   //
+   
+   glTranslatef(2, 0, 0);
+   
+   //6
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
+   cube();
+   glPopMatrix();
+   //
+   
+   glTranslatef(-4, 2, 0);
+   
+   //7
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
+   cube();
+   glPopMatrix();
+   //
+   
+   glTranslatef(2, 0, 0);
+   
+   //8
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
+   cube();
+   glPopMatrix();
+   //
+   
+   glTranslatef(2, 0, 0);
+   
+   //9
+   glPushMatrix();
+   //glRotatef(r, 1, 0, 0);
+   glTranslatef(0.0, -0.5, -0.5);
+   cube();
+   glPopMatrix();
+   //
    
    
    
