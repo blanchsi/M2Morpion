@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "ppm.c"
 
 #define BAS 1
 #define GAUCHE 2
 #define HAUT 3
 #define DROIT 4
 
-#define X .525731112119133606
-#define Z .850650808352039932
+
 
 
 float ex=0;
@@ -29,11 +29,50 @@ int rotateC2 = 0;
 float r1 = 0.0;
 float r2 = 0.0;
 
+//variables de textures
+static GLuint texCercleName[1];
+static GLuint texCroixName[1];
+GLubyte *cercle, *croix;
+int width, height;
+
 void init(void) 
 {
    glClearColor (0.0, 0.0, 1.0, 0.0);
    glEnable (GL_DEPTH_TEST);
+   
+   cercle=glmReadPPM("cercle.ppm", &width , &height); 
+   croix =glmReadPPM("croix.ppm", &width , &height);
+   
+   glGenTextures(1, texCercleName);
+   glGenTextures(1, texCroixName);
+   
+   glBindTexture(GL_TEXTURE_2D, texCercleName[0]);
+   
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+   
+   //cercle
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
+                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                cercle);
+   //croix          
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
+                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                croix);
+	
+   glEnable(GL_TEXTURE_2D);
 }
+
+void initCercleTex(){
+
+	
+
+}
+
+
 
 void my_timer(int v)
 {
@@ -54,17 +93,36 @@ void my_timer(int v)
 
 void cube(r, v, b){
 
+	//cercle
+   
+   //croix          
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
+                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                croix);
+	
+   glEnable(GL_TEXTURE_2D);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
    glBegin(GL_QUADS);
    
    
-   // Face verte
+   // Face du haut
    //
    glColor3f (1, 1, 1);
-      glVertex3f (0, 0, 1);
-      glVertex3f (1, 0, 1);
-      glVertex3f (1, 1, 1);
-      glVertex3f (0, 1, 1);
-      
+      glTexCoord2f(0, 0); glVertex3f (0, 0, 1);
+      glTexCoord2f(1, 0); glVertex3f (1, 0, 1);
+      glTexCoord2f(1, 1); glVertex3f (1, 1, 1);
+      glTexCoord2f(0, 1); glVertex3f (0, 1, 1);
+   glEnd();
+   
+   //croix          
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
+                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                cercle);
+	
+   glEnable(GL_TEXTURE_2D);
+   
+   glBegin(GL_QUADS);
       
    // Face rouge
    //
