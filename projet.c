@@ -10,8 +10,6 @@
 #define DROIT 4
 
 
-
-
 float ex=0;
 float ey=0;
 float ez=3;
@@ -179,11 +177,10 @@ void display(void)
    gluLookAt (ex, ey, ez, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
    
    
-   
    glClear (GL_COLOR_BUFFER_BIT);
    glClear (GL_DEPTH_BUFFER_BIT);
    
-   glTranslatef(-3.5, -3, -1.0);
+   glTranslatef(-3, -3, -0.5);
    glTranslatef(sx, sy, sz);
    
    // On dessine les cubes
@@ -192,8 +189,8 @@ void display(void)
    
    //CUBE 1
    glPushMatrix();
-   glRotatef(r1, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glRotatef(r1, 0, 1, 0);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -202,8 +199,8 @@ void display(void)
    
    //CUBE 2
    glPushMatrix();
-   glRotatef(r2, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glRotatef(r2, 0, 1, 0);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -213,7 +210,7 @@ void display(void)
    //CUBE 3
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -224,7 +221,7 @@ void display(void)
    //CUBE 4
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -234,7 +231,7 @@ void display(void)
    //CUBE 5
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -244,7 +241,7 @@ void display(void)
    //CUBE 6
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -254,7 +251,7 @@ void display(void)
    //CUBE 7
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -264,7 +261,7 @@ void display(void)
    //CUBE 8
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
@@ -274,12 +271,14 @@ void display(void)
    //CUBE 9
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
-   glTranslatef(0.0, -0.5, -0.5);
+   glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
    //
    
    glutSwapBuffers();
+   
+   // ICI vérification de la fin du jeu
 }
 
 
@@ -363,8 +362,7 @@ void keyboard(unsigned char key, int x, int y)
 		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz-0.05;
       	 break;
-      	 
-      	 
+      	 	 
       case 'v':
       	 sz=sz+0.05;
       	 sx=sx+0.05;
