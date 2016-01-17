@@ -40,30 +40,15 @@ void init(void)
    glClearColor (0.0, 0.0, 1.0, 0.0);
    glEnable (GL_DEPTH_TEST);
    
+   
+   /* Initialisation des textures
+   *	 Génération des textures
+   */
    cercle=glmReadPPM("cercle.ppm", &width , &height); 
    croix =glmReadPPM("croix.ppm", &width , &height);
    
    glGenTextures(1, texCercleName);
    glGenTextures(1, texCroixName);
-   
-   glBindTexture(GL_TEXTURE_2D, texCercleName[0]);
-   
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-   
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-   
-   //cercle
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
-                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                cercle);
-   //croix          
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
-                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                croix);
-	
-   glEnable(GL_TEXTURE_2D);
 }
 
 void initCercleTex(){
@@ -93,72 +78,91 @@ void my_timer(int v)
 
 void cube(r, v, b){
 
-	//cercle
    
-   //croix          
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
-                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                croix);
-	
-   glEnable(GL_TEXTURE_2D);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-   glBegin(GL_QUADS);
-   
+                
    
    // Face du haut
    //
-   glColor3f (1, 1, 1);
-      glTexCoord2f(0, 0); glVertex3f (0, 0, 1);
-      glTexCoord2f(1, 0); glVertex3f (1, 0, 1);
-      glTexCoord2f(1, 1); glVertex3f (1, 1, 1);
-      glTexCoord2f(0, 1); glVertex3f (0, 1, 1);
+   glBegin(GL_QUADS);
+   glColor3f (0.5, 0.5, 0.5);
+      glVertex3f (0, 0, 1);
+      glVertex3f (1, 0, 1);
+      glVertex3f (1, 1, 1);
+      glVertex3f (0, 1, 1);
    glEnd();
    
-   //croix          
+   // Face du bas
+   //
+   glBegin(GL_QUADS);
+   glColor3f (0.5, 0.5, 0.5);
+      glTexCoord2f(0, 0); glVertex3f (0, 0, 0);
+      glVertex3f (1, 0, 0);
+      glVertex3f (1, 1, 0);
+      glVertex3f (0, 1, 0);
+   glEnd();
+   
+   
+   // Face de gauche
+   // CERCLE
+   // On bind la texture du cercle puis on initialise les paramêtres de texture.
+   // On enable les textures
+   glBindTexture(GL_TEXTURE_2D, texCercleName[0]);
    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
                 height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                 cercle);
-	
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+   
+   glEnable(GL_TEXTURE_2D);
+
+   glBegin(GL_QUADS);
+   glColor3f (1, 1, 1);
+      glTexCoord2f(0, 0); glVertex3f (0, 0, 0);
+      glTexCoord2f(1, 0); glVertex3f (0, 0, 1);
+      glTexCoord2f(1, 1); glVertex3f (0, 1, 1);
+      glTexCoord2f(0, 1); glVertex3f (0, 1, 0);
+   glEnd();
+   
+   // Face de droite
+   // CROIX
+   // On bind la texture du croix puis on initialise les paramêtres de texture.
+   // On enable les textures
+   glBindTexture(GL_TEXTURE_2D, texCroixName[0]);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
+                height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                croix);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+   
    glEnable(GL_TEXTURE_2D);
    
    glBegin(GL_QUADS);
-      
-   // Face rouge
+   glColor3f (1, 1, 1);
+      glTexCoord2f(0, 0); glVertex3f (1, 0, 0);
+      glTexCoord2f(1, 0); glVertex3f (1, 0, 1);
+      glTexCoord2f(1, 1); glVertex3f (1, 1, 1);
+      glTexCoord2f(0, 1); glVertex3f (1, 1, 0);
+   glEnd();
+   
+   
+   // Face nord
    //
-   glColor3f (0.5, 0.5, 0.5);
-      glVertex3f (0, 0, 0);
-      glVertex3f (1, 0, 0);
-      glVertex3f (1, 1, 0);
-      glVertex3f (0, 1, 0);
-
-
-   // Face noire
-   //
-   glColor3f (0.5, 0.5, 0.5);
-      glVertex3f (0, 0, 0);
-      glVertex3f (0, 0, 1);
-      glVertex3f (0, 1, 1);
-      glVertex3f (0, 1, 0);
-
-   // Face blanche
-   //
-   glColor3f (0.5, 0.5, 0.5);
-      glVertex3f (1, 0, 0);
-      glVertex3f (1, 0, 1);
-      glVertex3f (1, 1, 1);
-      glVertex3f (1, 1, 0);
-
-   // Face grise
-   //
+   glBegin(GL_QUADS);
    glColor3f (0.5, 0.5, 0.5);
       glVertex3f (0, 1, 0);
       glVertex3f (0, 1, 1);
       glVertex3f (1, 1, 1);
       glVertex3f (1, 1, 0);
-
-   // Face jaune
+   glEnd();
+   
+   
+   // Face sud
    //
+   glBegin(GL_QUADS);
    glColor3f (0.5, 0.5, 0.5);
       glVertex3f (0, 0, 1);
       glVertex3f (0, 0, 0);
@@ -183,8 +187,10 @@ void display(void)
    glTranslatef(sx, sy, sz);
    
    // On dessine les cubes
+   // La numérotation des cubes se fait comme sur un pavé numérique.
+   // De bas-gauche à haut-droite
    
-   //1
+   //CUBE 1
    glPushMatrix();
    glRotatef(r1, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -194,7 +200,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //2
+   //CUBE 2
    glPushMatrix();
    glRotatef(r2, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -204,7 +210,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //3
+   //CUBE 3
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -215,7 +221,7 @@ void display(void)
    
    glTranslatef(-4, 2, 0);
    
-   //4
+   //CUBE 4
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -225,7 +231,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //5
+   //CUBE 5
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -235,7 +241,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //6
+   //CUBE 6
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -245,7 +251,7 @@ void display(void)
    
    glTranslatef(-4, 2, 0);
    
-   //7
+   //CUBE 7
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -255,7 +261,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //8
+   //CUBE 8
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -265,7 +271,7 @@ void display(void)
    
    glTranslatef(2, 0, 0);
    
-   //9
+   //CUBE 9
    glPushMatrix();
    //glRotatef(r, 1, 0, 0);
    glTranslatef(0.0, -0.5, -0.5);
@@ -273,8 +279,6 @@ void display(void)
    glPopMatrix();
    //
    
-   
-
    glutSwapBuffers();
 }
 
@@ -283,8 +287,8 @@ void display(void)
 void keyboard(unsigned char key, int x, int y)
 {
    switch (key) {
-   	
-   	 case '1':
+   	//Commandes des cubes
+   	case '1':
    	     printf("cube 1 \n");
    	     rotateC1 = 1;
    		break;
@@ -313,7 +317,8 @@ void keyboard(unsigned char key, int x, int y)
    	case '9':
    	     printf("cube 9 \n");
    		break;	
-   		
+      
+      //Commandes de X Y Z
       case 'x':
          ex=ex+0.05;
          break;
@@ -332,6 +337,8 @@ void keyboard(unsigned char key, int x, int y)
       case 'Z':
          ez=ez-0.05;
          break;
+         
+      //Commande Hauteur / Longueur / Profondeur
       case 'l':
       printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sx=sx+0.05;
@@ -356,6 +363,8 @@ void keyboard(unsigned char key, int x, int y)
 		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz-0.05;
       	 break;
+      	 
+      	 
       case 'v':
       	 sz=sz+0.05;
       	 sx=sx+0.05;
@@ -407,8 +416,3 @@ int main(int argc, char** argv)
    glutMainLoop();
    return 0;
 }
-
-
-
-
-
