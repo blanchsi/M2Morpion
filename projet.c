@@ -23,9 +23,28 @@ float ty=0.0;
 
 int rotateC1 = 0;
 int rotateC2 = 0;
+int rotateC3 = 0;
+int rotateC4 = 0;
+int rotateC5 = 0;
+int rotateC6 = 0;
+int rotateC7 = 0;
+int rotateC8 = 0;
+int rotateC9 = 0;
 
 float r1 = 0.0;
 float r2 = 0.0;
+float r3 = 0.0;
+float r4 = 0.0;
+float r5 = 0.0;
+float r6 = 0.0;
+float r7 = 0.0;
+float r8 = 0.0;
+float r9 = 0.0;
+
+// pair   > les cercles
+// impair > les croix
+int tour = 0;
+
 
 //variables de textures
 static GLuint texCercleName[1];
@@ -33,11 +52,10 @@ static GLuint texCroixName[1];
 GLubyte *cercle, *croix;
 int width, height;
 
-void init(void) 
+void init(void)
 {
    glClearColor (0.0, 0.0, 1.0, 0.0);
    glEnable (GL_DEPTH_TEST);
-   
    
    /* Initialisation des textures
    *	 Génération des textures
@@ -49,23 +67,64 @@ void init(void)
    glGenTextures(1, texCroixName);
 }
 
-void initCercleTex(){
+void rotationCercle(float* toRotate, int* intRotate){
 
-	
+	if(*toRotate != 90.0){ *toRotate += 5.0; }
+	if(*toRotate == 90.0){ 
+		tour++;
+		*intRotate = 0;
+	}
+}
 
+void rotationCroix(float* toRotate, int* intRotate){
+
+	if(*toRotate != -90.0){ *toRotate -= 5.0; }
+	if(*toRotate == -90.0){ 
+		tour++;
+		*intRotate = 0;
+	}
 }
 
 
 
 void my_timer(int v)
 {
-  
-   //r += .5;
+   
    if(rotateC1){
-   	r1 +=.5;
+   	if(tour%2==0){ rotationCercle(&r1, &rotateC1);}
+   	else 	   { rotationCroix(&r1, &rotateC1); }
    }
    if(rotateC2){
-   	r2 +=.5;
+	if(tour%2==0){ rotationCercle(&r2, &rotateC2);}
+   	else 	   { rotationCroix(&r2, &rotateC2); }
+   }
+   if(rotateC3){
+	if(tour%2==0){ rotationCercle(&r3, &rotateC3);}
+   	else 	   { rotationCroix(&r3, &rotateC3); }
+   }
+   if(rotateC4){
+	if(tour%2==0){ rotationCercle(&r4, &rotateC4);}
+   	else 	   { rotationCroix(&r4, &rotateC4); }
+   }
+   if(rotateC5){
+	if(tour%2==0){ rotationCercle(&r5, &rotateC5);}
+   	else 	   { rotationCroix(&r5, &rotateC5); }
+   }
+   if(rotateC6){
+	if(tour%2==0){ rotationCercle(&r6, &rotateC6);}
+   	else 	   { rotationCroix(&r6, &rotateC6); }
+   }
+   if(rotateC7){
+	if(tour%2==0){ rotationCercle(&r7, &rotateC7);}
+   	else 	   { rotationCroix(&r7, &rotateC7); }
+   }
+   if(rotateC8){
+	if(tour%2==0){ rotationCercle(&r8, &rotateC8);}
+   	else 	   { rotationCroix(&r8, &rotateC8); }
+   }
+   if(rotateC9){
+	if(tour%2==0){ rotationCercle(&r9, &rotateC9);}
+   	else 	   { rotationCroix(&r9, &rotateC9); }
    }
    
    //printf("%f \n", r);
@@ -209,7 +268,7 @@ void display(void)
    
    //CUBE 3
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r3, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -220,7 +279,7 @@ void display(void)
    
    //CUBE 4
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r4, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -230,7 +289,7 @@ void display(void)
    
    //CUBE 5
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r5, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -240,7 +299,7 @@ void display(void)
    
    //CUBE 6
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r6, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -250,7 +309,7 @@ void display(void)
    
    //CUBE 7
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r7, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -260,7 +319,7 @@ void display(void)
    
    //CUBE 8
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r8, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -270,7 +329,7 @@ void display(void)
    
    //CUBE 9
    glPushMatrix();
-   //glRotatef(r, 1, 0, 0);
+   glRotatef(r9, 0, 1, 0);
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
@@ -297,24 +356,31 @@ void keyboard(unsigned char key, int x, int y)
    		break;
    	case '3':
    	     printf("cube 3 \n");
+   	     rotateC3 = 1;
    		break;
    	case '4':
    	     printf("cube 4 \n");
+   	     rotateC4 = 1;
    		break;
    	case '5':
    	     printf("cube 5 \n");
+   	     rotateC5 = 1;
    		break;
    	case '6':
    	     printf("cube 6 \n");
+   	     rotateC6 = 1;
    		break;
    	case '7':
    	     printf("cube 7 \n");
+   	     rotateC7 = 1;
    		break;
    	case '8':
    	     printf("cube 8 \n");
+   	     rotateC8 = 1;
    		break;
    	case '9':
    	     printf("cube 9 \n");
+   	     rotateC9 = 1;
    		break;	
       
       //Commandes de X Y Z
