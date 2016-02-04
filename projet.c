@@ -55,7 +55,10 @@ int width, height;
 void init(void)
 {
    glClearColor (0.0, 0.0, 1.0, 0.0);
-   glEnable (GL_DEPTH_TEST);
+   
+   
+   
+   
    
    /* Initialisation des textures
    *	 Génération des textures
@@ -65,6 +68,10 @@ void init(void)
    
    glGenTextures(1, texCercleName);
    glGenTextures(1, texCroixName);
+   
+   glEnable(GL_LIGHTING);
+   glEnable(GL_LIGHT0);
+   glEnable(GL_DEPTH_TEST);
 }
 
 void rotationCercle(float* toRotate, int* intRotate){
@@ -232,12 +239,16 @@ void cube(r, v, b){
 
 void display(void)
 {
-   glLoadIdentity ();
+   glLoadIdentity();
+    
    gluLookAt (ex, ey, ez, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
    
    
    glClear (GL_COLOR_BUFFER_BIT);
    glClear (GL_DEPTH_BUFFER_BIT);
+   
+   
+   
    
    glTranslatef(-3, -3, -0.5);
    glTranslatef(sx, sy, sz);
@@ -334,6 +345,44 @@ void display(void)
    cube();
    glPopMatrix();
    //
+   
+   
+   /*
+   *		ECLAIRAGE
+   */
+   
+   // propriétés de l'objet
+   GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0} ;
+   GLfloat mat_diffuse[] = {0.1, 0.1, 0.1, 1.0} ;
+   GLfloat mat_specular[] = {1, 1, 1, 1} ;
+   GLfloat mat_shininess[] = {10.0} ;
+   GLfloat mat_emission[] = {0, 0, 0, 0} ;
+   
+   // propriétés de la source lumineuse
+   GLfloat light_ambient[] = {0.4, 0.4, 0.4, 0} ;
+   GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0} ;
+   GLfloat light_specular[] = {2.9, .9, .9, 0} ;
+   GLfloat light_position[] = {0.0, 0.0, 20.0, 1.0} ;
+   
+   // propriété général de l'eclairage
+   GLfloat general_light_ambient[] = {0.2, 0.2, 0.2, 1.0};
+   
+   // Paramêtres d'éclairage
+   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, general_light_ambient);
+   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+   
+   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+   
+   
+   
+   glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+   glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+   glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
    
    glutSwapBuffers();
    
