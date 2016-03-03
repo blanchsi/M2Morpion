@@ -5,6 +5,11 @@
 #include <stdbool.h>
 #include "ppm.c"
 
+
+// @Author : Sylvain BLANCHARD - Antoine SOUESME 
+// @Compil : gcc -I$MESA_PATH/include projet.c -o projet -L$MESA_PATH/lib -lGL -lGLU -lglut -L/usr/X11R6/lib -lX11 
+
+
 #define BAS 1
 #define GAUCHE 2
 #define HAUT 3
@@ -13,6 +18,8 @@
 #define VIDE -1
 #define CERCLE 0
 #define CROIX 1
+
+#define NB_CASES 3
 
 
 float ex=0;
@@ -58,14 +65,14 @@ GLubyte *cercle, *croix;
 int width, height;
 
 //tableau pour le morpion
-int tab[3][3] ;
+int tab[NB_CASES][NB_CASES] ;
 
 void afficheTableau()
 {
 	int i,j;
   for (i = 0 ; i < 3 ; i++){
   	for(j = 0; j<3; j++){
-  		printf("%d ", tab[i][j]); 
+  		printf("[%d][%d]=%d ",i,j,tab[i][j]); 
 		}
 		printf("\n");
 	}
@@ -84,49 +91,101 @@ void initTableau()
 	}
 }
 
-bool testVictoire()
+bool testVictoire(int tab[NB_CASES][NB_CASES])
 {
-	bool resultat;
+	bool resultat = false;
+
+	int i, j = 0;	
 	
-	resultat = false;
+	// test des lignes
+  /*for (i; i<= 2; i++){
+  	printf("ici 1 ? \n");
+		for (j; j<= 1; j++){ 
+				printf("ici 2 ? \n");
+            if( (tab[i][0] == j && tab[i][1] == j && tab[i][2] == j) || 
+						(tab[i][0] == j && tab[i][1] == j && tab[i][2] == j) )		
+						{
+							resultat = true;
+							printf("lignes %d gagne \n",i);
+						}              
+	    } 
+	}*/
+  
+	/*** TEST LIGNES *****/
 	
-	
-	if ( (tab[0][0] == tab[0][1]) && (tab[0][0] == tab[0][2]) )// ligne 1
+	// test ligne 1
+	if( (tab[0][0] == 1 && tab[0][1] == 1 && tab[0][2] == 1) || 
+			(tab[0][0] == 0 && tab[0][1] == 0 && tab[0][2] == 0) )		
 	{
 		resultat = true;
-		printf("lignes 1 \n");
-	} else	if (tab[1][0] == tab[1][1] == tab[1][2])	// ligne 2
+		printf("ligne 1 \n");
+	}	
+	
+	// test ligne 2
+	if( (tab[1][0] == 1 && tab[1][1] == 1 && tab[1][2] == 1) || 
+			(tab[1][0] == 0 && tab[1][1] == 0 && tab[1][2] == 0) )	
 	{
 		resultat = true;
-		printf("lignes 2 \n");
-	} else	if (tab[2][0] == tab[2][1] == tab[2][2])// ligne 3
+		printf("ligne 2 \n");
+	} 
+	
+	// test ligne 3
+	if( (tab[2][0] == 1 && tab[2][1] == 1 && tab[2][2] == 1) || 
+			(tab[2][0] == 0 && tab[2][1] == 0 && tab[2][2] == 0) )	
 	{
 		resultat = true;
-		printf("lignes 3 \n");
-	} else	if (tab[0][0] == tab[1][0] == tab[2][0])// colonne 1
+		printf("ligne 3 \n");
+	} 
+	
+	/*** FIN TEST LIGNES *****/
+	
+	/*** TEST COLONNES *****/
+	
+	// test colonne 1
+	if( (tab[0][0] == 1 && tab[1][0] == 1 && tab[2][0] == 1) || 
+			(tab[0][0] == 0 && tab[1][0] == 0 && tab[2][0] == 0) )		
 	{
 		resultat = true;
 		printf("colonne 1 \n");
-	} else	if (tab[0][1] == tab[1][1] == tab[2][1]) //colonne 2
+	}	
+	
+	// test ligne 2
+	if( (tab[0][1] == 1 && tab[1][1] == 1 && tab[2][1] == 1) || 
+			(tab[0][1] == 0 && tab[1][1] == 0 && tab[2][1] == 0) )	
 	{
 		resultat = true;
 		printf("colonne 2 \n");
-	}	else	if (tab[0][2] == tab[1][2] == tab[2][2]) //colonne 3
+	} 
+	
+	// test ligne 3
+	if( (tab[0][2] == 1 && tab[1][2] == 1 && tab[2][2] == 1) || 
+			(tab[0][2] == 0 && tab[1][2] == 0 && tab[2][2] == 0) )	
 	{
 		resultat = true;
 		printf("colonne 3 \n");
-	} else if (tab[2][0] == tab[1][1] == tab[0][2])	// diagonales SO-NE
+	} 
+	
+	/*** FIN TEST COLONNES *****/
+
+
+	/*** TEST DIAGONALES *****/
+	
+	// test diagonales SO-NE
+	if( (tab[2][0] == 1 && tab[1][1] == 1 && tab[0][2] == 1) || 
+			(tab[2][0] == 0 && tab[1][1] == 0 && tab[0][2] == 0) )		
 	{
 		resultat = true;
 		printf("diagonale SO-NE \n");
-	} else	if (tab[0][0] == tab[1][1] == tab[2][2]) // diagonale NO-SE
+	}	
+	
+	// test diagonale NO-SE
+	if( (tab[0][0] == 1 && tab[1][1] == 1 && tab[2][2] == 1) || 
+			(tab[0][0] == 0 && tab[1][1] == 0 && tab[2][2] == 0) )	
 	{
 		resultat = true;
 		printf("diagonale NO-SE \n");
-	} else {
-		printf("Rien pour l'instant \n");
-	}
-	
+	} 
+		
 	return resultat;
 }
 
@@ -411,30 +470,29 @@ void display(void)
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
-   //
+
    
    glutSwapBuffers();
    
-   // vérification de la fin du jeu
-   
-   // tour 9 - fin obligatoire
-   if (tour == 9 ) 
-   {
-   	printf("La partie est terminée \nAucun joueur n'a gagnée \n");   	
-   	exit(0);
-   }
-   
+   // affichage de l'état du jeu
    printf("----  \n");
    afficheTableau();
    printf("----  \n");
    
-   // TODO : utilisation de la fonction testVictoire 
- 	//  printf("%d\n", testVictoire());
- 	/*if (testVictoire())
- 	{
- 		printf("La partie a été gagnée \n");
- 		exit(0);
- 	}*/
+   // vérification de la fin du jeu
+    
+   // tour 9 - fin obligatoire
+		if (tour == 9 ) 
+		{
+			printf("La partie est terminée \nAucun joueur n'a gagnée \n");   	
+			exit(0);
+		}
+
+		if (testVictoire(tab))
+		{
+			printf("La partie a été gagnée \n");
+			exit(0);
+		}
    
 }
 
@@ -638,12 +696,7 @@ int main(int argc, char** argv)
    // init tableau morpion
    initTableau();
    afficheTableau();
-   
-	 //boucle du jeu
-   
-   
-   
-
+ 
    glutMainLoop();
    return 0;
 }
