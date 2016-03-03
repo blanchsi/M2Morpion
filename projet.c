@@ -95,27 +95,56 @@ bool testVictoire(int tab[NB_CASES][NB_CASES])
 {
 	bool resultat = false;
 
-	int i, j = 0;	
+	int i, j;	
 	
 	// test des lignes
-  /*for (i; i<= 2; i++){
-  	printf("ici 1 ? \n");
-		for (j; j<= 1; j++){ 
-				printf("ici 2 ? \n");
-            if( (tab[i][0] == j && tab[i][1] == j && tab[i][2] == j) || 
-						(tab[i][0] == j && tab[i][1] == j && tab[i][2] == j) )		
-						{
-							resultat = true;
-							printf("lignes %d gagne \n",i);
-						}              
-	    } 
-	}*/
+  for (i=0; i< NB_CASES; i++){  	
+  	for (j=0; j<2; j++)
+  	{
+			if( (tab[i][0] == CERCLE && tab[i][1] == CERCLE && tab[i][2] == CERCLE) || 
+					(tab[i][0] == CROIX && tab[i][1] == CROIX && tab[i][2] == CROIX) )		
+			{
+				resultat = true;
+			}	  	
+  	}
+	}
+	
+	// test des colonnes
+	for (i=0; i< NB_CASES; i++){  	
+  	for (j=0; j<2; j++)
+  	{
+			if( (tab[0][i] == CERCLE && tab[1][i] == CERCLE && tab[2][i] == CERCLE) || 
+					(tab[0][i] == CROIX && tab[1][i] == CROIX && tab[2][i] == CROIX) )		
+			{
+				resultat = true;
+			}	  	
+  	}
+	}
+  
+ 	/*** TEST DIAGONALES *****/
+	
+	// test diagonales SO-NE
+	if( (tab[2][0] == 1 && tab[1][1] == 1 && tab[0][2] == 1) || 
+			(tab[2][0] == 0 && tab[1][1] == 0 && tab[0][2] == 0) )		
+	{
+		resultat = true;
+		printf("diagonale SO-NE \n");
+	}	
+	
+	// test diagonale NO-SE
+	if( (tab[0][0] == 1 && tab[1][1] == 1 && tab[2][2] == 1) || 
+			(tab[0][0] == 0 && tab[1][1] == 0 && tab[2][2] == 0) )	
+	{
+		resultat = true;
+		printf("diagonale NO-SE \n");
+	} 
+  
   
 	/*** TEST LIGNES *****/
-	
+	/*
 	// test ligne 1
-	if( (tab[0][0] == 1 && tab[0][1] == 1 && tab[0][2] == 1) || 
-			(tab[0][0] == 0 && tab[0][1] == 0 && tab[0][2] == 0) )		
+	if( (tab[0][0] == CERCLE && tab[0][1] == CERCLE && tab[0][2] == CERCLE) || 
+			(tab[0][0] == CROIX && tab[0][1] == CROIX && tab[0][2] == CROIX) )		
 	{
 		resultat = true;
 		printf("ligne 1 \n");
@@ -135,12 +164,12 @@ bool testVictoire(int tab[NB_CASES][NB_CASES])
 	{
 		resultat = true;
 		printf("ligne 3 \n");
-	} 
+	} */
 	
 	/*** FIN TEST LIGNES *****/
 	
 	/*** TEST COLONNES *****/
-	
+	/*
 	// test colonne 1
 	if( (tab[0][0] == 1 && tab[1][0] == 1 && tab[2][0] == 1) || 
 			(tab[0][0] == 0 && tab[1][0] == 0 && tab[2][0] == 0) )		
@@ -149,7 +178,7 @@ bool testVictoire(int tab[NB_CASES][NB_CASES])
 		printf("colonne 1 \n");
 	}	
 	
-	// test ligne 2
+	// test colonne 2
 	if( (tab[0][1] == 1 && tab[1][1] == 1 && tab[2][1] == 1) || 
 			(tab[0][1] == 0 && tab[1][1] == 0 && tab[2][1] == 0) )	
 	{
@@ -157,34 +186,15 @@ bool testVictoire(int tab[NB_CASES][NB_CASES])
 		printf("colonne 2 \n");
 	} 
 	
-	// test ligne 3
+	// test colonne 3
 	if( (tab[0][2] == 1 && tab[1][2] == 1 && tab[2][2] == 1) || 
 			(tab[0][2] == 0 && tab[1][2] == 0 && tab[2][2] == 0) )	
 	{
 		resultat = true;
 		printf("colonne 3 \n");
 	} 
-	
+	*/
 	/*** FIN TEST COLONNES *****/
-
-
-	/*** TEST DIAGONALES *****/
-	
-	// test diagonales SO-NE
-	if( (tab[2][0] == 1 && tab[1][1] == 1 && tab[0][2] == 1) || 
-			(tab[2][0] == 0 && tab[1][1] == 0 && tab[0][2] == 0) )		
-	{
-		resultat = true;
-		printf("diagonale SO-NE \n");
-	}	
-	
-	// test diagonale NO-SE
-	if( (tab[0][0] == 1 && tab[1][1] == 1 && tab[2][2] == 1) || 
-			(tab[0][0] == 0 && tab[1][1] == 0 && tab[2][2] == 0) )	
-	{
-		resultat = true;
-		printf("diagonale NO-SE \n");
-	} 
 		
 	return resultat;
 }
@@ -502,6 +512,8 @@ void keyboard(unsigned char key, int x, int y)
 {
    switch (key) {
    	//Commandes des cubes
+   	SDL_Delay(50); // pour gérer le lag input
+   	
    	case '1':
    			
    			if (tab[2][0] == CERCLE || tab[2][0] == CROIX )
