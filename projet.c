@@ -65,7 +65,7 @@ void afficheTableau()
 	int i,j;
   for (i = 0 ; i < 3 ; i++){
   	for(j = 0; j<3; j++){
-  		printf("%d ", tab[i][j]); 
+  		printf("%d (%d , %d) ", tab[i][j], i, j); 
 		}
 		printf("\n");
 	}
@@ -84,6 +84,8 @@ void initTableau()
 	}
 }
 
+
+
 bool testVictoire()
 {
 	bool resultat;
@@ -91,19 +93,19 @@ bool testVictoire()
 	resultat = false;
 	
 	
-	if ( (tab[0][0] == tab[0][1]) && (tab[0][0] == tab[0][2]) )// ligne 1
+	if ( (tab[0][0] == 1 && tab[0][1] ==1 && tab[0][2] == 1) || (tab[0][0] == tab[0][1] == tab[0][2] == 0) )// ligne 1
 	{
 		resultat = true;
 		printf("lignes 1 \n");
-	} else	if (tab[1][0] == tab[1][1] == tab[1][2])	// ligne 2
+	} else if (tab[1][0] == tab[1][1] == tab[1][2] == 1 || tab[1][0] == tab[1][1] == tab[1][2] == 0)	// ligne 2
 	{
 		resultat = true;
 		printf("lignes 2 \n");
-	} else	if (tab[2][0] == tab[2][1] == tab[2][2])// ligne 3
+	} else if (tab[2][0] == tab[2][1] == tab[2][2])// ligne 3
 	{
 		resultat = true;
 		printf("lignes 3 \n");
-	} else	if (tab[0][0] == tab[1][0] == tab[2][0])// colonne 1
+	} else if (tab[0][0] == tab[1][0] == tab[2][0])// colonne 1
 	{
 		resultat = true;
 		printf("colonne 1 \n");
@@ -149,8 +151,8 @@ void init(void)
    glGenTextures(1, texCercleName);
    glGenTextures(1, texCroixName);
    
-   glEnable(GL_LIGHTING);
-   glEnable(GL_LIGHT0);
+   /*glEnable(GL_LIGHTING);
+   glEnable(GL_LIGHT0);*/
    glEnable(GL_DEPTH_TEST);
 }
 
@@ -446,7 +448,7 @@ void display(void)
    GLfloat general_light_ambient[] = {0.2, 0.2, 0.2, 1.0};
    
    // Paramêtres d'éclairage
-   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, general_light_ambient);
+   /*glLightModelfv(GL_LIGHT_MODEL_AMBIENT, general_light_ambient);
    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
    
    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
@@ -460,7 +462,7 @@ void display(void)
    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-   glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+   glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);*/
    
    glutSwapBuffers();
    
@@ -479,11 +481,11 @@ void display(void)
    
    // TODO : utilisation de la fonction testVictoire 
  	//  printf("%d\n", testVictoire());
- 	/*if (testVictoire())
+ 	if (testVictoire())
  	{
  		printf("La partie a été gagnée \n");
  		exit(0);
- 	}*/
+ 	}
    
 }
 
