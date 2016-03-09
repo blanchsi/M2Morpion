@@ -67,6 +67,12 @@ int width, height;
 //tableau pour le morpion
 int tab[NB_CASES][NB_CASES] ;
 
+// booleen de fin
+bool fin = false;
+
+// booleen de rotation en cours
+bool enRotation = false;
+
 void afficheTableau()
 {
 	int i,j;
@@ -218,7 +224,7 @@ void init(void)
 
 void rotationCercle(float* toRotate, int* intRotate){
 
-	if(*toRotate != 90.0){ *toRotate += 5.0; }
+	if(*toRotate != 90.0){ *toRotate += 15.0; }
 	if(*toRotate == 90.0){ 
 		tour++;
 		*intRotate = 0;
@@ -227,7 +233,7 @@ void rotationCercle(float* toRotate, int* intRotate){
 
 void rotationCroix(float* toRotate, int* intRotate){
 
-	if(*toRotate != -90.0){ *toRotate -= 5.0; }
+	if(*toRotate != -90.0){ *toRotate -= 15.0; }
 	if(*toRotate == -90.0){ 
 		tour++;
 		*intRotate = 0;
@@ -276,8 +282,12 @@ void my_timer(int v)
    }
    //printf("%f \n", r);
    
+   // la rotation est finie
+   enRotation = !enRotation;
+   
    glutTimerFunc(10, my_timer, 1);
    glutPostRedisplay();
+   
 }
 
 void cube(r, v, b){
@@ -492,16 +502,22 @@ void display(void)
    // vérification de la fin du jeu
     
    // tour 9 - fin obligatoire
-		if (tour == 9 ) 
+		if (tour == 9) 
 		{
-			printf("La partie est terminée \nAucun joueur n'a gagnée \n");   	
-			exit(0);
+			printf("La partie est terminée \nAucun joueur n'a gagnée \n");   
+			printf("Appuyer sur 'r' pour recommencer \n ou sur 'echap' pour quitter\n");
+			fin = true;	
+			
+			// exit(0);
+			
 		}
 
 		if (testVictoire(tab))
 		{
 			printf("La partie a été gagnée \n");
-			exit(0);
+			printf("Appuyer sur 'r' pour recommencer \n ou sur 'echap' pour quitter\n");
+			// exit(0);
+			fin = true;
 		}
    
 }
@@ -515,73 +531,85 @@ void keyboard(unsigned char key, int x, int y)
    	SDL_Delay(50); // pour gérer le lag input
    	
    	case '1':
-   			
-   			if (tab[2][0] == CERCLE || tab[2][0] == CROIX )
-   			{
-   				printf("La case a déjà été jouée \n");
-   			} else {   			
-   	     	printf("cube 1 a été joué \n");
-   	     	rotateC1 = 1;   	     	
-   	     	tab[2][0] = tour%2==0;    	     	
-   	    }   	     	
-   	    afficheTableau();
+   			if (!fin){
+		 			if (tab[2][0] == CERCLE || tab[2][0] == CROIX )
+		 			{
+		 				printf("La case a déjà été jouée \n");
+		 			} else {   			
+		 	     	printf("cube 1 a été joué \n");
+		 	     	rotateC1 = 1;   	     	
+		 	     	tab[2][0] = tour%2==0;    	     	
+		 	    }   	     	
+		 	    afficheTableau();
+		 	  }
    			break;
    	case '2':
-   			if (tab[2][1] == CERCLE || tab[2][1] == CROIX )
-   			{
-   				printf("La case a déjà été jouée \n");
-   			} else {   			
-   	     	printf("cube 2 a été joué \n");
-   	     	rotateC2 = 1;   	     	
-   	     	tab[2][1] = tour%2==0;    	     
-   	    }  
-   	    afficheTableau();
+   			if (!fin){
+		 			if (tab[2][1] == CERCLE || tab[2][1] == CROIX )
+		 			{
+		 				printf("La case a déjà été jouée \n");
+		 			} else {   			
+		 	     	printf("cube 2 a été joué \n");
+		 	     	rotateC2 = 1;   	     	
+		 	     	tab[2][1] = tour%2==0;    	     
+		 	    }  
+		 	    afficheTableau();
+   	    }
    			break;
    	case '3':
-   	     if (tab[2][2] == CERCLE || tab[2][2] == CROIX )
-   			{
-   				printf("La case a déjà été jouée \n");
-   			} else {   			
-   	     	printf("cube 3 a été joué \n");
-   	     	rotateC3 = 1;   	     	
-   	     	tab[2][2] = tour%2==0;    	     
-   	    }  
-   	    afficheTableau();
+   			if (!fin){
+		 	     if (tab[2][2] == CERCLE || tab[2][2] == CROIX )
+		 			 {
+		 				printf("La case a déjà été jouée \n");
+		 			 } else {   			
+		 	     	printf("cube 3 a été joué \n");
+		 	     	rotateC3 = 1;   	     	
+		 	     	tab[2][2] = tour%2==0;    	     
+		 	     }  
+		 	     afficheTableau();
+   	    }
    			break;
    	case '4':
-   	     if (tab[1][0] == CERCLE || tab[1][0] == CROIX )
-   			{
-   				printf("La case a déjà été jouée \n");
-   			} else {   			
-   	     	printf("cube 4 a été joué \n");
-   	     	rotateC4 = 1;   	     	
-   	     	tab[1][0] = tour%2==0;    	     
-   	    }  
-   	    afficheTableau();   		
+   			if (!fin){
+		 	     if (tab[1][0] == CERCLE || tab[1][0] == CROIX )
+		 			{
+		 				printf("La case a déjà été jouée \n");
+		 			} else {   			
+		 	     	printf("cube 4 a été joué \n");
+		 	     	rotateC4 = 1;   	     	
+		 	     	tab[1][0] = tour%2==0;    	     
+		 	    }  
+   	    afficheTableau();
+   	    }   		
    	    break;
    	case '5':
+   	if (!fin){
    	     if (tab[1][1] == CERCLE || tab[1][1] == CROIX )
    			{
    				printf("La case a déjà été jouée \n");
    			} else {   			
    	     	printf("cube 5 a été joué \n");
-   	     	rotateC5 = 1;   	     	
-   	     	tab[1][1] = tour%2==0;    	     
+   	     	rotateC5 = 1;   	  
+  	     	tab[1][1] = tour%2==0;    	     
    	    }  
-   	    afficheTableau();   		
+   	    afficheTableau();   
+   	    }		
    	    break;
    	case '6':
+   	   	if (!fin){
    	     if (tab[1][2] == CERCLE || tab[1][2] == CROIX )
    			{
    				printf("La case a déjà été jouée \n");
    			} else {   			
    	     	printf("cube 6 a été joué \n");
-   	     	rotateC6 = 1;   	     	
+   	     	rotateC6 = 1;     	
    	     	tab[1][2] = tour%2==0;    	     
    	    }  
-   	    afficheTableau();   		
+   	    afficheTableau(); 
+   	    }  		
    	    break;
    	case '7':
+   	   	if (!fin){
    	     if (tab[0][0] == CERCLE || tab[0][0] == CROIX )
    			{
    				printf("La case a déjà été jouée \n");
@@ -590,20 +618,24 @@ void keyboard(unsigned char key, int x, int y)
    	     	rotateC7 = 1;   	     	
    	     	tab[0][0] = tour%2==0;    	     
    	    }  
-   	    afficheTableau();   		
+   	    afficheTableau();   
+   	    }		
    	    break;
    	case '8':
+   		   	if (!fin){
    	     if (tab[0][1] == CERCLE || tab[0][1] == CROIX )
    			{
    				printf("La case a déjà été jouée \n");
    			} else {   			
    	     	printf("cube 8 a été joué \n");
-   	     	rotateC8 = 1;   	     	
+   	     	rotateC8 = 1;   	   	
    	     	tab[0][1] = tour%2==0;    	     
    	    }  
-   	    afficheTableau();   		
+   	    afficheTableau(); 
+   	    }  		
    	    break;
    	case '9':
+   			if (!fin){
    	     if (tab[0][2] == CERCLE || tab[0][2] == CROIX )
    			{
    				printf("La case a déjà été jouée \n");
@@ -614,6 +646,7 @@ void keyboard(unsigned char key, int x, int y)
    	    }  
    	    afficheTableau();   		
    	    break;
+   	    }
    		break;	
       
       //Commandes de X Y Z
@@ -661,6 +694,59 @@ void keyboard(unsigned char key, int x, int y)
 		 printf("x: %f y: %f z: %f \n", sx, sy, sz);
       	 sz=sz-0.05;
       	 break;
+      	
+      // restart ou quitter	 
+      case 'r':
+      case 'R':
+      	if ( fin ) 
+      	{
+      		// relancer le jeu
+      		fin = false;
+      		enRotation = false;
+      		init();
+      		tour = 0;
+      		initTableau();
+      	
+					ex=0;
+					ey=0;
+					ez=3;
+					
+					sx=1.0;
+					sy=1.0;
+					sz=1.0;
+					
+					tx=0.0;
+					ty=0.0;
+
+					rotateC1 = 0;
+					rotateC2 = 0;
+					rotateC3 = 0;
+					rotateC4 = 0;
+					rotateC5 = 0;
+					rotateC6 = 0;
+					rotateC7 = 0;
+					rotateC8 = 0;
+					rotateC9 = 0;
+
+					r1 = 0.0;
+					r2 = 0.0;
+					r3 = 0.0;
+					r4 = 0.0;
+					r5 = 0.0;
+					r6 = 0.0;
+					r7 = 0.0;
+					r8 = 0.0;
+					r9 = 0.0;
+					
+					
+      	      	
+      	}
+      	break;
+      	
+      case 'q':
+      case 'Q':
+      	exit(0);
+      	break;
       	 	 
       case 'v':
       	 sz=sz+0.05;
