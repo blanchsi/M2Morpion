@@ -21,18 +21,21 @@
 
 #define NB_CASES 3
 
-
+//
 float ex=0;
 float ey=0;
 float ez=3;
 
+//
 float sx=1.0;
 float sy=1.0;
 float sz=1.0;
 
+//
 float tx=0.0;
 float ty=0.0;
 
+//
 int rotateC1 = 0;
 int rotateC2 = 0;
 int rotateC3 = 0;
@@ -43,6 +46,7 @@ int rotateC7 = 0;
 int rotateC8 = 0;
 int rotateC9 = 0;
 
+//
 float r1 = 0.0;
 float r2 = 0.0;
 float r3 = 0.0;
@@ -73,6 +77,7 @@ bool fin = false;
 // booleen de rotation en cours
 bool enRotation = false;
 
+// état du tableau sous-jacent à l'écran
 void afficheTableau()
 {
 	int i,j;
@@ -84,6 +89,7 @@ void afficheTableau()
 	}
 }
 
+// initialise le tableau a 9 cases sous-jacent à l'écran
 void initTableau()
 {
 	int i, j,k=0;
@@ -91,12 +97,13 @@ void initTableau()
   // Initialisation du tableau
   for (i = 0 ; i < 3 ; i++){
   	for(j = 0; j<3; j++){
-  		tab[i][j] = VIDE - k; // par défaut on met a -1
+  		tab[i][j] = VIDE - k; // par défaut on initialise de -1 a -9
   		k++;
 		}
 	}
 }
 
+// booleen qui retourne l'état du jeu
 bool testVictoire(int tab[NB_CASES][NB_CASES])
 {
 	bool resultat = false;
@@ -206,7 +213,7 @@ bool testVictoire(int tab[NB_CASES][NB_CASES])
 }
 
 	
-
+// fonction qui initialise les textures
 void init(void)
 {
    glClearColor (0.0, 0.0, 1.0, 0.0);
@@ -222,6 +229,7 @@ void init(void)
    glGenTextures(1, texCroixName);
 }
 
+// fonction qui initie la rotation du cercle
 void rotationCercle(float* toRotate, int* intRotate){
 
 	if(*toRotate != 90.0){ *toRotate += 15.0; }
@@ -231,6 +239,7 @@ void rotationCercle(float* toRotate, int* intRotate){
 	}
 }
 
+// fonction qui initie la rotation de la croix
 void rotationCroix(float* toRotate, int* intRotate){
 
 	if(*toRotate != -90.0){ *toRotate -= 15.0; }
@@ -290,10 +299,9 @@ void my_timer(int v)
    
 }
 
+// dessin des cubes
 void cube(r, v, b){
-
-   
-                
+              
    
    // Face du haut
    //
