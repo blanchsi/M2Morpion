@@ -5,6 +5,11 @@
 #include <stdbool.h>
 #include "ppm.c"
 
+
+// @Author : Sylvain BLANCHARD - Antoine SOUESME 
+// @Compil : gcc -I$MESA_PATH/include projet.c -o projet -L$MESA_PATH/lib -lGL -lGLU -lglut -L/usr/X11R6/lib -lX11 
+
+
 #define BAS 1
 #define GAUCHE 2
 #define HAUT 3
@@ -13,6 +18,8 @@
 #define VIDE -1
 #define CERCLE 0
 #define CROIX 1
+
+#define NB_CASES 3
 
 
 float ex=0;
@@ -58,14 +65,15 @@ GLubyte *cercle, *croix;
 int width, height;
 
 //tableau pour le morpion
-int tab[3][3] ;
+int tab[NB_CASES][NB_CASES] ;
 
 void afficheTableau()
 {
 	int i,j;
   for (i = 0 ; i < 3 ; i++){
   	for(j = 0; j<3; j++){
-  		printf("%d (%d , %d) ", tab[i][j], i, j); 
+
+  		printf("[%d][%d]=%d ",i,j,tab[i][j]); 
 		}
 		printf("\n");
 	}
@@ -86,49 +94,60 @@ void initTableau()
 
 
 
-bool testVictoire()
+bool testVictoire(int tab[NB_CASES][NB_CASES])
 {
-	bool resultat;
+	bool resultat = false;
+
+	int i, j;	
 	
-	resultat = false;
+	// test des lignes
+  for (i=0; i< NB_CASES; i++){  	
+  	for (j=0; j<2; j++)
+  	{
+			if( (tab[i][0] == CERCLE && tab[i][1] == CERCLE && tab[i][2] == CERCLE) || 
+					(tab[i][0] == CROIX && tab[i][1] == CROIX && tab[i][2] == CROIX) )		
+			{
+				resultat = true;
+			}	  	
+  	}
+	}
 	
+	// test des colonnes
+	for (i=0; i< NB_CASES; i++){  	
+  	for (j=0; j<2; j++)
+  	{
+			if( (tab[0][i] == CERCLE && tab[1][i] == CERCLE && tab[2][i] == CERCLE) || 
+					(tab[0][i] == CROIX && tab[1][i] == CROIX && tab[2][i] == CROIX) )		
+			{
+				resultat = true;
+			}	  	
+  	}
+	}
+  
+ 	/*** TEST DIAGONALES *****/
 	
-	if ( (tab[0][0] == 1 && tab[0][1] ==1 && tab[0][2] == 1) || (tab[0][0] == tab[0][1] == tab[0][2] == 0) )// ligne 1
-	{
-		resultat = true;
-		printf("lignes 1 \n");
-	} else if (tab[1][0] == tab[1][1] == tab[1][2] == 1 || tab[1][0] == tab[1][1] == tab[1][2] == 0)	// ligne 2
-	{
-		resultat = true;
-		printf("lignes 2 \n");
-	} else if (tab[2][0] == tab[2][1] == tab[2][2])// ligne 3
-	{
-		resultat = true;
-		printf("lignes 3 \n");
-	} else if (tab[0][0] == tab[1][0] == tab[2][0])// colonne 1
-	{
-		resultat = true;
-		printf("colonne 1 \n");
-	} else	if (tab[0][1] == tab[1][1] == tab[2][1]) //colonne 2
-	{
-		resultat = true;
-		printf("colonne 2 \n");
-	}	else	if (tab[0][2] == tab[1][2] == tab[2][2]) //colonne 3
-	{
-		resultat = true;
-		printf("colonne 3 \n");
-	} else if (tab[2][0] == tab[1][1] == tab[0][2])	// diagonales SO-NE
+
+	// test diagonales SO-NE
+	if( (tab[2][0] == 1 && tab[1][1] == 1 && tab[0][2] == 1) || 
+			(tab[2][0] == 0 && tab[1][1] == 0 && tab[0][2] == 0) )		
 	{
 		resultat = true;
 		printf("diagonale SO-NE \n");
-	} else	if (tab[0][0] == tab[1][1] == tab[2][2]) // diagonale NO-SE
+	}	
+	
+	// test diagonale NO-SE
+	if( (tab[0][0] == 1 && tab[1][1] == 1 && tab[2][2] == 1) || 
+			(tab[0][0] == 0 && tab[1][1] == 0 && tab[2][2] == 0) )	
 	{
 		resultat = true;
 		printf("diagonale NO-SE \n");
-	} else {
-		printf("Rien pour l'instant \n");
-	}
+	} 
+  
+  
+	/*** TEST LIGNES *****/
 	
+	/*** FIN TEST COLONNES *****/
+		
 	return resultat;
 }
 
@@ -424,7 +443,7 @@ void display(void)
    glTranslatef(-0.5, -0.5, -0.5);
    cube();
    glPopMatrix();
-   //
+
    
    
    /*
@@ -466,26 +485,26 @@ void display(void)
    
    glutSwapBuffers();
    
-   // vérification de la fin du jeu
-   
-   // tour 9 - fin obligatoire
-   if (tour == 9 ) 
-   {
-   	printf("La partie est terminée \nAucun joueur n'a gagnée \n");   	
-   	exit(0);
-   }
-   
+   // affichage de l'état du jeu
    printf("----  \n");
    afficheTableau();
    printf("----  \n");
    
-   // TODO : utilisation de la fonction testVictoire 
- 	//  printf("%d\n", testVictoire());
- 	if (testVictoire())
- 	{
- 		printf("La partie a été gagnée \n");
- 		exit(0);
- 	}
+
+   // vérification de la fin du jeu
+    
+   // tour 9 - fin obligatoire
+		if (tour == 9 ) 
+		{
+			printf("La partie est terminée \nAucun joueur n'a gagnée \n");   	
+			exit(0);
+		}
+
+		if (testVictoire(tab))
+		{
+			printf("La partie a été gagnée \n");
+			exit(0);
+		}
    
 }
 
@@ -495,6 +514,8 @@ void keyboard(unsigned char key, int x, int y)
 {
    switch (key) {
    	//Commandes des cubes
+   	SDL_Delay(50); // pour gérer le lag input
+   	
    	case '1':
    			
    			if (tab[2][0] == CERCLE || tab[2][0] == CROIX )
@@ -689,12 +710,7 @@ int main(int argc, char** argv)
    // init tableau morpion
    initTableau();
    afficheTableau();
-   
-	 //boucle du jeu
-   
-   
-   
-
+ 
    glutMainLoop();
    return 0;
 }
